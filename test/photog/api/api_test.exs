@@ -260,4 +260,62 @@ defmodule Photog.ApiTest do
       assert %Ecto.Changeset{} = Api.change_person(person)
     end
   end
+
+  describe "person_images" do
+    alias Photog.Api.PersonImage
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def person_image_fixture(attrs \\ %{}) do
+      {:ok, person_image} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Api.create_person_image()
+
+      person_image
+    end
+
+    test "list_person_images/0 returns all person_images" do
+      person_image = person_image_fixture()
+      assert Api.list_person_images() == [person_image]
+    end
+
+    test "get_person_image!/1 returns the person_image with given id" do
+      person_image = person_image_fixture()
+      assert Api.get_person_image!(person_image.id) == person_image
+    end
+
+    test "create_person_image/1 with valid data creates a person_image" do
+      assert {:ok, %PersonImage{} = person_image} = Api.create_person_image(@valid_attrs)
+    end
+
+    test "create_person_image/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Api.create_person_image(@invalid_attrs)
+    end
+
+    test "update_person_image/2 with valid data updates the person_image" do
+      person_image = person_image_fixture()
+      assert {:ok, person_image} = Api.update_person_image(person_image, @update_attrs)
+      assert %PersonImage{} = person_image
+    end
+
+    test "update_person_image/2 with invalid data returns error changeset" do
+      person_image = person_image_fixture()
+      assert {:error, %Ecto.Changeset{}} = Api.update_person_image(person_image, @invalid_attrs)
+      assert person_image == Api.get_person_image!(person_image.id)
+    end
+
+    test "delete_person_image/1 deletes the person_image" do
+      person_image = person_image_fixture()
+      assert {:ok, %PersonImage{}} = Api.delete_person_image(person_image)
+      assert_raise Ecto.NoResultsError, fn -> Api.get_person_image!(person_image.id) end
+    end
+
+    test "change_person_image/1 returns a person_image changeset" do
+      person_image = person_image_fixture()
+      assert %Ecto.Changeset{} = Api.change_person_image(person_image)
+    end
+  end
 end

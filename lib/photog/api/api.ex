@@ -389,4 +389,100 @@ defmodule Photog.Api do
   def change_person(%Person{} = person) do
     Person.changeset(person, %{})
   end
+
+  alias Photog.Api.PersonImage
+
+  @doc """
+  Returns the list of person_images.
+
+  ## Examples
+
+      iex> list_person_images()
+      [%PersonImage{}, ...]
+
+  """
+  def list_person_images do
+    Repo.all(PersonImage)
+  end
+
+  @doc """
+  Gets a single person_image.
+
+  Raises `Ecto.NoResultsError` if the Person image does not exist.
+
+  ## Examples
+
+      iex> get_person_image!(123)
+      %PersonImage{}
+
+      iex> get_person_image!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_person_image!(id), do: Repo.get!(PersonImage, id)
+
+  @doc """
+  Creates a person_image.
+
+  ## Examples
+
+      iex> create_person_image(%{field: value})
+      {:ok, %PersonImage{}}
+
+      iex> create_person_image(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_person_image(attrs \\ %{}) do
+    %PersonImage{}
+    |> PersonImage.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a person_image.
+
+  ## Examples
+
+      iex> update_person_image(person_image, %{field: new_value})
+      {:ok, %PersonImage{}}
+
+      iex> update_person_image(person_image, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_person_image(%PersonImage{} = person_image, attrs) do
+    person_image
+    |> PersonImage.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a PersonImage.
+
+  ## Examples
+
+      iex> delete_person_image(person_image)
+      {:ok, %PersonImage{}}
+
+      iex> delete_person_image(person_image)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_person_image(%PersonImage{} = person_image) do
+    Repo.delete(person_image)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking person_image changes.
+
+  ## Examples
+
+      iex> change_person_image(person_image)
+      %Ecto.Changeset{source: %PersonImage{}}
+
+  """
+  def change_person_image(%PersonImage{} = person_image) do
+    PersonImage.changeset(person_image, %{})
+  end
 end
