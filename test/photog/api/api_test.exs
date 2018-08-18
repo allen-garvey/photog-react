@@ -134,4 +134,68 @@ defmodule Photog.ApiTest do
       assert %Ecto.Changeset{} = Api.change_image(image)
     end
   end
+
+  describe "albums" do
+    alias Photog.Api.Album
+
+    @valid_attrs %{apple_photos_id: 42, folder_order: 42, name: "some name"}
+    @update_attrs %{apple_photos_id: 43, folder_order: 43, name: "some updated name"}
+    @invalid_attrs %{apple_photos_id: nil, folder_order: nil, name: nil}
+
+    def album_fixture(attrs \\ %{}) do
+      {:ok, album} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Api.create_album()
+
+      album
+    end
+
+    test "list_albums/0 returns all albums" do
+      album = album_fixture()
+      assert Api.list_albums() == [album]
+    end
+
+    test "get_album!/1 returns the album with given id" do
+      album = album_fixture()
+      assert Api.get_album!(album.id) == album
+    end
+
+    test "create_album/1 with valid data creates a album" do
+      assert {:ok, %Album{} = album} = Api.create_album(@valid_attrs)
+      assert album.apple_photos_id == 42
+      assert album.folder_order == 42
+      assert album.name == "some name"
+    end
+
+    test "create_album/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Api.create_album(@invalid_attrs)
+    end
+
+    test "update_album/2 with valid data updates the album" do
+      album = album_fixture()
+      assert {:ok, album} = Api.update_album(album, @update_attrs)
+      assert %Album{} = album
+      assert album.apple_photos_id == 43
+      assert album.folder_order == 43
+      assert album.name == "some updated name"
+    end
+
+    test "update_album/2 with invalid data returns error changeset" do
+      album = album_fixture()
+      assert {:error, %Ecto.Changeset{}} = Api.update_album(album, @invalid_attrs)
+      assert album == Api.get_album!(album.id)
+    end
+
+    test "delete_album/1 deletes the album" do
+      album = album_fixture()
+      assert {:ok, %Album{}} = Api.delete_album(album)
+      assert_raise Ecto.NoResultsError, fn -> Api.get_album!(album.id) end
+    end
+
+    test "change_album/1 returns a album changeset" do
+      album = album_fixture()
+      assert %Ecto.Changeset{} = Api.change_album(album)
+    end
+  end
 end
