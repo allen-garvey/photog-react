@@ -485,4 +485,100 @@ defmodule Photog.Api do
   def change_person_image(%PersonImage{} = person_image) do
     PersonImage.changeset(person_image, %{})
   end
+
+  alias Photog.Api.AlbumImage
+
+  @doc """
+  Returns the list of album_images.
+
+  ## Examples
+
+      iex> list_album_images()
+      [%AlbumImage{}, ...]
+
+  """
+  def list_album_images do
+    Repo.all(AlbumImage)
+  end
+
+  @doc """
+  Gets a single album_image.
+
+  Raises `Ecto.NoResultsError` if the Album image does not exist.
+
+  ## Examples
+
+      iex> get_album_image!(123)
+      %AlbumImage{}
+
+      iex> get_album_image!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_album_image!(id), do: Repo.get!(AlbumImage, id)
+
+  @doc """
+  Creates a album_image.
+
+  ## Examples
+
+      iex> create_album_image(%{field: value})
+      {:ok, %AlbumImage{}}
+
+      iex> create_album_image(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_album_image(attrs \\ %{}) do
+    %AlbumImage{}
+    |> AlbumImage.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a album_image.
+
+  ## Examples
+
+      iex> update_album_image(album_image, %{field: new_value})
+      {:ok, %AlbumImage{}}
+
+      iex> update_album_image(album_image, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_album_image(%AlbumImage{} = album_image, attrs) do
+    album_image
+    |> AlbumImage.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a AlbumImage.
+
+  ## Examples
+
+      iex> delete_album_image(album_image)
+      {:ok, %AlbumImage{}}
+
+      iex> delete_album_image(album_image)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_album_image(%AlbumImage{} = album_image) do
+    Repo.delete(album_image)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking album_image changes.
+
+  ## Examples
+
+      iex> change_album_image(album_image)
+      %Ecto.Changeset{source: %AlbumImage{}}
+
+  """
+  def change_album_image(%AlbumImage{} = album_image) do
+    AlbumImage.changeset(album_image, %{})
+  end
 end
