@@ -11,6 +11,9 @@ defmodule Photog.Api.Album do
     field :cover_image_id, :id
 
     timestamps()
+
+    belongs_to :image, Photog.Api.Image
+    belongs_to :folder, Photog.Api.Folder
   end
 
   @doc false
