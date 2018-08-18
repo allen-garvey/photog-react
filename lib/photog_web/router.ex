@@ -20,7 +20,9 @@ defmodule PhotogWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PhotogWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PhotogWeb do
+    pipe_through :api
+
+    resources "/folders", FolderController, only: [:index, :show]
+  end
 end
