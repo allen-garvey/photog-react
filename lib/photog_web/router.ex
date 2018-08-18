@@ -26,5 +26,6 @@ defmodule PhotogWeb.Router do
     resources "/folders", FolderController, only: [:index, :show]
     resources "/images", ImageController, only: [:index, :show]
     resources "/albums", AlbumController, only: [:index, :show]
+    resources "/persons", PersonController, only: [:index, :show]
   end
 end
