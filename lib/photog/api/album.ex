@@ -13,7 +13,7 @@ defmodule Photog.Api.Album do
     timestamps()
 
     belongs_to :image, Photog.Api.Image
-    belongs_to :folder, Photog.Api.Folder
+    # belongs_to :folder, Photog.Api.Folder
   end
 
   @doc false
