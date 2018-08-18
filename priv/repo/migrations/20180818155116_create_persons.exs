@@ -12,7 +12,7 @@ defmodule Photog.Repo.Migrations.CreatePersons do
 
     create index(:persons, [:cover_image_id])
 
-    create unique_index(:albums, [:apple_photos_id])
-    create unique_index(:albums, [:name])
+    create unique_index(:persons, [:apple_photos_id])
+    create unique_index(:persons, [:name])
   end
 end
