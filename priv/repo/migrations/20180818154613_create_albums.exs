@@ -16,6 +16,5 @@ defmodule Photog.Repo.Migrations.CreateAlbums do
     create index(:albums, [:cover_image_id])
 
     create unique_index(:albums, [:apple_photos_id])
-    create unique_index(:albums, [:name])
   end
 end

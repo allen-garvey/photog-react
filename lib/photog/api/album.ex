@@ -21,7 +21,6 @@ defmodule Photog.Api.Album do
     |> cast(attrs, [:apple_photos_id, :name, :folder_order, :folder_id, :cover_image_id])
     |> validate_required([:apple_photos_id, :name, :folder_order, :folder_id, :cover_image_id])
     |> unique_constraint(:apple_photos_id)
-    |> unique_constraint(:name)
     |> assoc_constraint(:folder)
     |> foreign_key_constraint(:folder_id)
     |> assoc_constraint(:image)
