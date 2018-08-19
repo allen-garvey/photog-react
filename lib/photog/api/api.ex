@@ -9,6 +9,7 @@ defmodule Photog.Api do
   alias Photog.Api.Folder
   alias Photog.Api.Album
   alias Photog.Api.AlbumImage
+  alias Photog.Api.PersonImage
 
   @doc """
   Returns the list of folders.
@@ -339,9 +340,10 @@ defmodule Photog.Api do
   def list_persons do
     #better than using separate preload, since only uses 1 query
     #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
-    Repo.all from p in Person,
-           preload: [:cover_image],
-           order_by: :name
+    Repo.all from person in Person,
+          join: cover_image in assoc(person, :cover_image), 
+          preload: [cover_image: cover_image],
+          order_by: :name
   end
 
   @doc """
@@ -361,10 +363,15 @@ defmodule Photog.Api do
   def get_person!(id) do
     #better than using separate preload, since only uses 1 query
     #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
+    images_query = from image in Image, 
+                      join: person_image in PersonImage, on: image.id == person_image.image_id,
+                      where: person_image.person_id == ^id,
+                      order_by: [desc: image.creation_time]
+
     Repo.one! from person in Person,
            join:  image in assoc(person, :images),
            where: person.id == ^id,
-           preload: [:images, :cover_image],
+           preload: [images: ^images_query, cover_image: image],
            limit: 1
   end
 
@@ -432,8 +439,6 @@ defmodule Photog.Api do
   def change_person(%Person{} = person) do
     Person.changeset(person, %{})
   end
-
-  alias Photog.Api.PersonImage
 
   @doc """
   Returns the list of person_images.
