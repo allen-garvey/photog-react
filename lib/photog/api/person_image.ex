@@ -4,8 +4,8 @@ defmodule Photog.Api.PersonImage do
 
 
   schema "person_images" do
-    field :person_id, :id
-    field :image_id, :id
+    belongs_to :image, Photog.Api.Image
+    belongs_to :person, Photog.Api.Person
 
     timestamps()
   end

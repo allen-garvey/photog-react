@@ -5,8 +5,9 @@ defmodule Photog.Api.AlbumImage do
 
   schema "album_images" do
     field :order, :integer
-    field :album_id, :id
-    field :image_id, :id
+    
+    belongs_to :image, Photog.Api.Image
+    belongs_to :album, Photog.Api.Album
 
     timestamps()
   end
