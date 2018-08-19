@@ -11,11 +11,17 @@ defmodule PhotogWeb.ImageView do
   end
 
   def render("image.json", %{image: image}) do
-    %{id: image.id,
+    image_to_map(image)
+  end
+
+  def image_to_map(image) do
+    %{
+      id: image.id,
       creation_time: image.creation_time,
       master_path: image.master_path,
       thumbnail_path: image.thumbnail_path,
       mini_thumbnail_path: image.mini_thumbnail_path,
-      is_favorite: image.is_favorite}
+      is_favorite: image.is_favorite,
+    }
   end
 end
