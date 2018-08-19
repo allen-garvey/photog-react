@@ -14,5 +14,11 @@ defmodule PhotogWeb.AlbumView do
     %{id: album.id,
       name: album.name,
       folder_order: album.folder_order}
+  def album_excerpt_to_map(album) do
+    %{
+      id: album.id,
+      name: album.name,
+      cover_image: PhotogWeb.ImageView.image_to_map(album.cover_image),
+    }
   end
 end
