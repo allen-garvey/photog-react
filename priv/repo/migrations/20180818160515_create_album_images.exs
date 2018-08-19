@@ -3,7 +3,7 @@ defmodule Photog.Repo.Migrations.CreateAlbumImages do
 
   def change do
     create table(:album_images) do
-      add :order, :integer, null: false
+      add :image_order, :integer, null: false
       add :album_id, references(:albums, on_delete: :nothing), null: false
       add :image_id, references(:images, on_delete: :nothing), null: false
 
