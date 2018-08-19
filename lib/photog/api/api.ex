@@ -8,6 +8,7 @@ defmodule Photog.Api do
 
   alias Photog.Api.Folder
   alias Photog.Api.Album
+  alias Photog.Api.AlbumImage
 
   @doc """
   Returns the list of folders.
@@ -224,7 +225,12 @@ defmodule Photog.Api do
 
   """
   def list_albums do
-    Repo.all(Album)
+    #better than using separate preload, since only uses 1 query
+    #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
+    Repo.all from album in Album,
+          join: cover_image in assoc(album, :cover_image), 
+          preload: [cover_image: cover_image],
+          order_by: :id
   end
 
   @doc """
@@ -241,7 +247,18 @@ defmodule Photog.Api do
       ** (Ecto.NoResultsError)
 
   """
-  def get_album!(id), do: Repo.get!(Album, id)
+  def get_album!(id) do
+    images_query = from image in Image, 
+                      join: album_image in AlbumImage, on: image.id == album_image.image_id,
+                      where: album_image.album_id == ^id,
+                      order_by: album_image.image_order
+
+    Repo.one!(from album in Album, 
+                      join: image in assoc(album, :images),
+                      where: album.id == ^id,
+                      preload: [cover_image: image, images: ^images_query],
+                      limit: 1)
+  end
 
   @doc """
   Creates a album.
@@ -511,8 +528,6 @@ defmodule Photog.Api do
   def change_person_image(%PersonImage{} = person_image) do
     PersonImage.changeset(person_image, %{})
   end
-
-  alias Photog.Api.AlbumImage
 
   @doc """
   Returns the list of album_images.
