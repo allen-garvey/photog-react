@@ -14,7 +14,7 @@ defmodule PhotogWeb.FolderView do
     %{
       id: folder.id,
       name: folder.name,
-      albums: Enum.map(folder.albums, &folder_album/1)
+      albums: Enum.map(folder.albums, &PhotogWeb.AlbumView.album_excerpt_to_map/1)
     }
   end
 
@@ -23,13 +23,4 @@ defmodule PhotogWeb.FolderView do
       name: folder.name}
   end
 
-  defp folder_album(album) do
-    %{
-      id: album.id,
-      name: album.name,
-      cover_image: %{
-        mini_thumbnail_path: album.cover_image.mini_thumbnail_path
-      }
-    }
-  end
 end
