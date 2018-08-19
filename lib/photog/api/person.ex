@@ -6,11 +6,11 @@ defmodule Photog.Api.Person do
   schema "persons" do
     field :apple_photos_id, :integer
     field :name, :string
-    field :cover_image_id, :id
 
     timestamps()
 
-    belongs_to :image, Photog.Api.Image
+    belongs_to :cover_image, Photog.Api.Image, foreign_key: :cover_image_id
+    many_to_many :images, Photog.Api.Image, join_through: "person_images"
   end
 
   @doc false

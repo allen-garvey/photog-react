@@ -12,6 +12,9 @@ defmodule Photog.Api.Image do
     field :thumbnail_path, :string
 
     timestamps()
+
+    many_to_many :albums, Photog.Api.Album, join_through: "album_images"
+    many_to_many :persons, Photog.Api.Person, join_through: "person_images"
   end
 
   @doc false

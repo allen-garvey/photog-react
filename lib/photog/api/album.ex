@@ -7,13 +7,12 @@ defmodule Photog.Api.Album do
     field :apple_photos_id, :integer
     field :folder_order, :integer
     field :name, :string
-    field :folder_id, :id
-    field :cover_image_id, :id
 
     timestamps()
 
-    belongs_to :image, Photog.Api.Image
-    # belongs_to :folder, Photog.Api.Folder
+    belongs_to :cover_image, Photog.Api.Image, foreign_key: :cover_image_id
+    many_to_many :images, Photog.Api.Image, join_through: "album_images"
+    belongs_to :folder, Photog.Api.Folder
   end
 
   @doc false
