@@ -17,7 +17,13 @@ defmodule PhotogWeb.ImageView do
   def image_to_map(image) do
     %{
       id: image.id,
-      creation_time: image.creation_time,
+      creation_time: %{
+        raw: image.creation_time,
+        formatted: %{
+          us_date: PhotogWeb.DatetimeHelpers.to_us_formatted_date(image.creation_time),
+          time: PhotogWeb.DatetimeHelpers.to_formatted_time(image.creation_time),
+        }
+      },
       master_path: image.master_path,
       thumbnail_path: image.thumbnail_path,
       mini_thumbnail_path: image.mini_thumbnail_path,
