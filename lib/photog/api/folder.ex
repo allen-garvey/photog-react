@@ -8,6 +8,8 @@ defmodule Photog.Api.Folder do
     field :name, :string
 
     timestamps()
+
+    has_many :albums, Photog.Api.Album
   end
 
   @doc false
