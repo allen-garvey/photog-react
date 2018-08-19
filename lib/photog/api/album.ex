@@ -10,7 +10,7 @@ defmodule Photog.Api.Album do
 
     timestamps()
 
-    belongs_to :cover_image, Photog.Api.Image, foreign_key: :cover_image_id
+    belongs_to :cover_image, Photog.Api.Image
     many_to_many :images, Photog.Api.Image, join_through: "album_images"
     belongs_to :folder, Photog.Api.Folder
   end

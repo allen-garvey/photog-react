@@ -9,7 +9,7 @@ defmodule Photog.Api.Person do
 
     timestamps()
 
-    belongs_to :cover_image, Photog.Api.Image, foreign_key: :cover_image_id
+    belongs_to :cover_image, Photog.Api.Image
     many_to_many :images, Photog.Api.Image, join_through: "person_images"
   end
 
