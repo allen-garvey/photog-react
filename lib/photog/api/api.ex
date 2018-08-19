@@ -320,7 +320,11 @@ defmodule Photog.Api do
 
   """
   def list_persons do
-    Repo.all(Person)
+    #better than using separate preload, since only uses 1 query
+    #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
+    Repo.all from p in Person,
+           preload: [:cover_image],
+           order_by: :name
   end
 
   @doc """
@@ -337,7 +341,15 @@ defmodule Photog.Api do
       ** (Ecto.NoResultsError)
 
   """
-  def get_person!(id), do: Repo.get!(Person, id)
+  def get_person!(id) do
+    #better than using separate preload, since only uses 1 query
+    #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
+    Repo.one! from person in Person,
+           join:  image in assoc(person, :images),
+           where: person.id == ^id,
+           preload: [:images, :cover_image],
+           limit: 1
+  end
 
   @doc """
   Creates a person.
