@@ -15,6 +15,10 @@ erl_crash.dump
 # variables.
 /config/*.secret.exs
 
+#compiled js and css
+priv/static/css/*
+priv/static/js/*
+
 # default ignore
 .DS_Store
 .directory
