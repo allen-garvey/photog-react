@@ -3,9 +3,9 @@
         <ul class="album-list thumbnail-list">
             <li v-for="(item, i) in thumbnailList" :key="i">
                 <router-link :to="showRouteFor(item)" class="image-container">
-                    <img :alt="`Thumbnail for ${item.name}`" :src="thumbnailUrlFor(item)" />
+                    <img :alt="altTextFor(item)" :src="thumbnailUrlFor(item)" />
                 </router-link>
-                <h3 class="album-title" v-if="item.name"><router-link :to="showRouteFor(item)">{{item.name}}</router-link></h3>
+                <h3 class="album-title" :class="{'default-title': !('name' in item)}"><router-link :to="showRouteFor(item)">{{titleFor(item)}}</router-link></h3>
             </li>
         </ul>
     </main>
@@ -79,6 +79,18 @@ export default {
                     id: item.id,
                 },
             };
+        },
+        titleFor: function(item){
+            if('name' in item){
+                return item.name;
+            }
+            return `${item.creation_time.formatted.us_date} ${item.creation_time.formatted.time}`;
+        },
+        altTextFor: function(item){
+            if('name' in item){
+                return `Thumbnail for ${item.name}`;
+            }
+            return `Thumbnail for image taken on ${item.creation_time.formatted.us_date}`;
         },
     }
 }
