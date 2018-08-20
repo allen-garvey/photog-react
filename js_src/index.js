@@ -25,11 +25,29 @@ const router = new VueRouter({
             },
         },
         { 
+            path: '/persons',
+            name: 'personsIndex', 
+            component: AlbumList,
+            props: {
+                itemShowRouteName: 'personsShow',
+                thumbnailListKey: null,
+            },
+        },
+        { 
             path: '/albums/:id',
             name: 'albumShow', 
             component: AlbumList,
             props: {
                 itemShowRouteName: 'albumShow',
+                thumbnailListKey: 'images',
+            },
+        },
+        { 
+            path: '/persons/:id',
+            name: 'personsShow', 
+            component: AlbumList,
+            props: {
+                itemShowRouteName: 'personsShow',
                 thumbnailListKey: 'images',
             },
         },

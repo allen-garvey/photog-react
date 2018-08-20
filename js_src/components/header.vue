@@ -5,7 +5,7 @@
             <ul class="nav-list">
                 <li><router-link :to="{name: 'albumIndex'}">Albums</router-link></li>
                 <li><a href="/folders">Folders</a></li>
-                <li><a href="/people">People</a></li>
+                <li><router-link :to="{name: 'personsIndex'}">Persons</router-link></li>
             </ul>
         </nav>
     </header>
