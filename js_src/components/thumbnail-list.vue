@@ -1,5 +1,6 @@
 <template>
     <main class="main container">
+        <h2 v-if="model.name">{{model.name}}</h2>
         <ul class="album-list thumbnail-list">
             <li v-for="(item, i) in thumbnailList" :key="i">
                 <router-link :to="showRouteFor(item)" class="image-container">
