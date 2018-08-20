@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './components/app.vue'
 import ThumbnailList from './components/thumbnail-list.vue'
+import TextList from './components/text-list.vue'
 
 
 Vue.use(VueRouter);
@@ -16,8 +17,17 @@ const router = new VueRouter({
             redirect: '/albums' 
         },
         { 
+            path: '/folders',
+            name: 'foldersIndex', 
+            component: TextList,
+            props: {
+                itemShowRouteName: 'foldersShow',
+                thumbnailListKey: null,
+            },
+        },
+        { 
             path: '/albums',
-            name: 'albumIndex', 
+            name: 'albumsIndex', 
             component: ThumbnailList,
             props: {
                 itemShowRouteName: 'albumShow',
@@ -49,6 +59,15 @@ const router = new VueRouter({
             props: {
                 itemShowRouteName: 'personsShow',
                 thumbnailListKey: 'images',
+            },
+        },
+        { 
+            path: '/folders/:id',
+            name: 'foldersShow', 
+            component: ThumbnailList,
+            props: {
+                itemShowRouteName: 'albumShow',
+                thumbnailListKey: 'albums',
             },
         },
     ],
