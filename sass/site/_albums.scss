@@ -16,9 +16,13 @@ $thumbnail_dimensions: 205px;
 }
 .thumbnail-list .album-title{
     min-height: 2em;
-    font-size: medium;
     font-weight: normal;
-    margin-bottom: 0;
+    margin: 8px 0 0;
+    font-size: 1.125rem;
+
+    &.default-title{
+        font-size: 0.98rem;
+    }
 }
 .thumbnail-list .image-container img{
     height: $thumbnail_dimensions;
