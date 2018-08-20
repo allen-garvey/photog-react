@@ -90,7 +90,16 @@ const router = new VueRouter({
                     modelApiPath: `/albums/${route.params.album_id}`,
                     parent: {
                         parentRouteName: 'albumsShow',
-                        modelId: route.params.image_id,
+                        modelId: parseInt(route.params.image_id),
+                        showRouteFor: (item)=>{
+                            return {
+                                name: 'albumImageShow',
+                                params: {
+                                    album_id: route.params.album_id,
+                                    image_id: item.id,
+                                },
+                            };
+                        },
                     },
                 }; 
             },
@@ -104,7 +113,16 @@ const router = new VueRouter({
                     modelApiPath: `/persons/${route.params.person_id}`,
                     parent: {
                         parentRouteName: 'personsShow',
-                        modelId: route.params.image_id,
+                        modelId: parseInt(route.params.image_id),
+                        showRouteFor: (item)=>{
+                            return {
+                                name: 'personImageShow',
+                                params: {
+                                    person_id: route.params.person_id,
+                                    image_id: item.id,
+                                },
+                            };
+                        },
                     },
                 }; 
             },
