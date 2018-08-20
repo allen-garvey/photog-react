@@ -1,12 +1,13 @@
 <template>
     <main class="main container">
         <h2 v-if="model.name">{{model.name}}</h2>
-        <ul class="album-list thumbnail-list">
+        <ul class="thumbnail-list">
             <li v-for="(item, i) in thumbnailList" :key="i">
-                <router-link :to="showRouteFor(item)" class="image-container">
+                <router-link :to="showRouteFor(item)" class="thumbnail-image-container">
                     <img :alt="altTextFor(item)" :src="thumbnailUrlFor(item)" />
+                    <div v-if="isThumbnailFavorited(item)" class="heart"></div>
                 </router-link>
-                <h3 class="album-title" :class="{'default-title': !('name' in item)}"><router-link :to="showRouteFor(item)">{{titleFor(item)}}</router-link></h3>
+                <h3 class="thumbnail-title" :class="{'default-title': !('name' in item)}"><router-link :to="showRouteFor(item)">{{titleFor(item)}}</router-link></h3>
             </li>
         </ul>
     </main>
@@ -69,9 +70,21 @@ export default {
                 this.isLoadingModel = false;
             });
         },
+        imageFor: function(item){
+            if('cover_image' in item){
+                return item.cover_image;
+            }
+            return item;
+        },
+        isThumbnailFavorited: function(item){
+            //don't show favorite heart for cover image
+            if('cover_image' in item){
+                return false;
+            }
+            return this.imageFor(item).is_favorite;
+        },
         thumbnailUrlFor: function(item){
-            const imageContainer = item.cover_image ? item.cover_image : item;
-            return `/media/thumbnails/${encodeURI(imageContainer.mini_thumbnail_path)}`;
+            return `/media/thumbnails/${encodeURI(this.imageFor(item).mini_thumbnail_path)}`;
         },
         showRouteFor: function(item){
             return {
