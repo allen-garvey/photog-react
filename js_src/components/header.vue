@@ -3,7 +3,7 @@
         <h1 class="brand"><a href="/">Photog</a></h1>
         <nav>
             <ul class="nav-list">
-                <li><a href="/albums">Albums</a></li>
+                <li><router-link to="/albums">Albums</router-link></li>
                 <li><a href="/folders">Folders</a></li>
                 <li><a href="/people">People</a></li>
             </ul>

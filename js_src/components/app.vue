@@ -1,7 +1,7 @@
 <template>
     <div>
         <Photog-Header></Photog-Header>
-        <Album-List></Album-List>
+        <router-view></router-view>
         <Photog-Footer></Photog-Footer>
     </div>
 </template>
@@ -9,7 +9,6 @@
 <script>
 import PhotogHeader from './header.vue'
 import PhotogFooter from './footer.vue'
-import AlbumList from './album-list.vue'
 
 export default {
     name: 'Photog-App',
@@ -19,7 +18,6 @@ export default {
     components: {
         'Photog-Header': PhotogHeader,
         'Photog-Footer': PhotogFooter,
-        'Album-List': AlbumList,
     },
     data() {
         return {
