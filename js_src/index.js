@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import App from './components/app.vue'
 import ThumbnailList from './components/thumbnail-list.vue'
 import TextList from './components/text-list.vue'
+import ImageDetail from './components/image-detail.vue'
 
 
 Vue.use(VueRouter);
@@ -57,7 +58,7 @@ const router = new VueRouter({
             name: 'personsShow', 
             component: ThumbnailList,
             props: {
-                itemShowRouteName: 'personsShow',
+                itemShowRouteName: 'imagesShow',
                 itemsListKey: 'images',
             },
         },
@@ -68,6 +69,44 @@ const router = new VueRouter({
             props: {
                 itemShowRouteName: 'albumsShow',
                 itemsListKey: 'albums',
+            },
+        },
+        { 
+            path: '/images/:id',
+            name: 'imagesShow', 
+            component: ImageDetail,
+            props: (route) => {
+                return {
+                    modelApiPath: `/images/${route.params.id}`
+                }; 
+            },
+        },
+        { 
+            path: '/albums/:album_id/images/:image_id',
+            name: 'albumImageShow', 
+            component: ImageDetail,
+            props: (route) => {
+                return {
+                    modelApiPath: `/albums/${route.params.album_id}`,
+                    parent: {
+                        parentRouteName: 'albumsShow',
+                        modelId: route.params.image_id,
+                    },
+                }; 
+            },
+        },
+        { 
+            path: '/persons/:person_id/images/:image_id',
+            name: 'personImageShow', 
+            component: ImageDetail,
+            props: (route) => {
+                return {
+                    modelApiPath: `/persons/${route.params.person_id}`,
+                    parent: {
+                        parentRouteName: 'personsShow',
+                        modelId: route.params.image_id,
+                    },
+                }; 
             },
         },
     ],
