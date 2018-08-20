@@ -1,7 +1,7 @@
 <template>
     <div>
         <Photog-Header></Photog-Header>
-        <router-view></router-view>
+        <router-view :get-items="get"></router-view>
         <Photog-Footer></Photog-Footer>
     </div>
 </template>
@@ -10,10 +10,11 @@
 import PhotogHeader from './header.vue'
 import PhotogFooter from './footer.vue'
 
+const API_URL_BASE = '/api';
+
 export default {
     name: 'Photog-App',
     props: {
-
     },
     components: {
         'Photog-Header': PhotogHeader,
@@ -21,7 +22,7 @@ export default {
     },
     data() {
         return {
-
+            cache: new Map(),
         }
     },
     computed: {
@@ -30,7 +31,20 @@ export default {
     created() {
     },
     methods: {
-
+        get: function(modelPath){
+            if(this.cache.has(modelPath)){
+                return new Promise((resolve)=>{
+                    resolve(this.cache.get(modelPath));
+                });
+            }
+            return fetch(API_URL_BASE + modelPath).then((res)=>{
+                return res.json();
+            }).then((json)=>{
+                const data = json.data;
+                this.cache.set(modelPath, data);
+                return data;
+            });
+        },
     }
 }
 </script>

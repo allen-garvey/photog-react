@@ -1,9 +1,9 @@
 <template>
     <header class="header container">
-        <h1 class="brand"><a href="/">Photog</a></h1>
+        <h1 class="brand"><router-link :to="{name: 'home'}">Photog</router-link></h1>
         <nav>
             <ul class="nav-list">
-                <li><router-link to="/albums">Albums</router-link></li>
+                <li><router-link :to="{name: 'albumIndex'}">Albums</router-link></li>
                 <li><a href="/folders">Folders</a></li>
                 <li><a href="/people">People</a></li>
             </ul>

@@ -9,7 +9,22 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        { path: '/albums', component: AlbumList },
+        { 
+            path: '/', 
+            name: 'home',
+            component: AlbumList, 
+            redirect: '/albums' 
+        },
+        { 
+            path: '/albums',
+            name: 'albumIndex', 
+            component: AlbumList 
+        },
+        { 
+            path: '/albums/:id',
+            name: 'albumShow', 
+            component: AlbumList 
+        },
     ],
 });
 
