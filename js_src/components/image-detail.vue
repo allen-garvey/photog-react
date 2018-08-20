@@ -1,10 +1,10 @@
 <template>
     <main class="main container" v-if="isModelLoaded">
-       <div class="image-show-thumbnail-container">
-           <a :href="masterUrl">
-               <img :src="thumbnailUrl"/>
-           </a>
-       </div>
+        <div class="image-show-thumbnail-container">
+            <a :href="masterUrl">
+                <img :src="thumbnailUrl"/>
+            </a>
+        </div>
         <div class="image-show-link-container">
             <a :href="masterUrl">View full-size</a>
         </div>
@@ -16,7 +16,7 @@
                 <dt>Favorite</dt>
                 <dd>{{model.is_favorite ? 'true' : 'false'}}</dd>
             </dl>
-      </div>
+        </div>
     </main>
 </template>
 
