@@ -1,7 +1,7 @@
 <template>
     <div>
         <Photog-Header></Photog-Header>
-        <router-view :get-items="get"></router-view>
+        <router-view :get-model="get"></router-view>
         <Photog-Footer></Photog-Footer>
     </div>
 </template>

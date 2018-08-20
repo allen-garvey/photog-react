@@ -18,12 +18,20 @@ const router = new VueRouter({
         { 
             path: '/albums',
             name: 'albumIndex', 
-            component: AlbumList 
+            component: AlbumList,
+            props: {
+                itemShowRouteName: 'albumShow',
+                thumbnailListKey: null,
+            },
         },
         { 
             path: '/albums/:id',
             name: 'albumShow', 
-            component: AlbumList 
+            component: AlbumList,
+            props: {
+                itemShowRouteName: 'albumShow',
+                thumbnailListKey: 'images',
+            },
         },
     ],
 });

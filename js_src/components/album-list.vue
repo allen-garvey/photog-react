@@ -1,11 +1,11 @@
 <template>
     <main class="main container">
         <ul class="album-list thumbnail-list">
-            <li v-for="(item, i) in items" :key="i">
-                <a href="/albums/3600" class="image-container">
+            <li v-for="(item, i) in thumbnailList" :key="i">
+                <router-link :to="showRouteFor(item)" class="image-container">
                     <img :alt="`Thumbnail for ${item.name}`" :src="thumbnailUrlFor(item)" />
-                </a>
-                <h3 class="album-title"><a href="/albums/3600">{{item.name}}</a></h3>
+                </router-link>
+                <h3 class="album-title" v-if="item.name"><router-link :to="showRouteFor(item)">{{item.name}}</router-link></h3>
             </li>
         </ul>
     </main>
@@ -15,9 +15,16 @@
 export default {
     name: 'Album-List',
     props: {
-        getItems: {
+        getModel: {
             type: Function,
             required: true,
+        },
+        itemShowRouteName: {
+            type: String,
+            required: true,
+        },
+        thumbnailListKey: {
+            type: String,
         },
     },
     components: {
@@ -26,31 +33,52 @@ export default {
         //initial setup of items, since $route watch method won't be called on initial load
         console.log('album list created');
         console.log(this.$route);
-        this.loadItems(this.$route.path);
+        this.loadModel(this.$route.path);
     },
     data() {
         return {
-            items: [],
+            model: [],
+            //need this property or there will be errors when we switch routes and new models haven't been loaded yet
+            isLoadingModel: true,
         }
     },
     computed: {
-
+        thumbnailList: function(){
+            if(this.isLoadingModel){
+                return [];
+            }
+            if(this.thumbnailListKey){
+                return this.model[this.thumbnailListKey];
+            }
+            return this.model;
+        },
     },
     watch: {
         '$route'(to, from){
             console.log('route changed');
             console.log(to);
-            this.getItems(to.path);
+            this.loadModel(to.path);
         }
     },
     methods: {
-        loadItems: function(modelPath){
-            this.getItems(modelPath).then((itemsJson)=>{
-                this.items = itemsJson;
+        loadModel: function(modelPath){
+            this.isLoadingModel = true;
+            this.getModel(modelPath).then((itemsJson)=>{
+                this.model = itemsJson;
+                this.isLoadingModel = false;
             });
         },
         thumbnailUrlFor: function(item){
-            return `/media/thumbnails/${encodeURI(item.cover_image.mini_thumbnail_path)}`;
+            const imageContainer = item.cover_image ? item.cover_image : item;
+            return `/media/thumbnails/${encodeURI(imageContainer.mini_thumbnail_path)}`;
+        },
+        showRouteFor: function(item){
+            return {
+                name: this.itemShowRouteName,
+                params: {
+                    id: item.id,
+                },
+            };
         },
     }
 }
