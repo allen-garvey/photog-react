@@ -30,7 +30,7 @@ const router = new VueRouter({
             name: 'albumsIndex', 
             component: ThumbnailList,
             props: {
-                itemShowRouteName: 'albumShow',
+                itemShowRouteName: 'albumsShow',
                 itemsListKey: null,
             },
         },
@@ -45,10 +45,10 @@ const router = new VueRouter({
         },
         { 
             path: '/albums/:id',
-            name: 'albumShow', 
+            name: 'albumsShow', 
             component: ThumbnailList,
             props: {
-                itemShowRouteName: 'albumShow',
+                itemShowRouteName: 'imagesShow',
                 itemsListKey: 'images',
             },
         },
@@ -66,7 +66,7 @@ const router = new VueRouter({
             name: 'foldersShow', 
             component: ThumbnailList,
             props: {
-                itemShowRouteName: 'albumShow',
+                itemShowRouteName: 'albumsShow',
                 itemsListKey: 'albums',
             },
         },
