@@ -3,12 +3,13 @@
         <div class="album-image-show-header" v-if="parent">
             <router-link :to="{name: parent.parentRouteName, params: {id: model.id}}">Back to {{model.name}}</router-link>
             <div class="album-image-nav">
-                <div></div>
-                <a href="/albums/3596/images/14281#photo_id14281">Next</a>
+                <router-link :to="parent.showRouteFor(previousImage)" v-if="previousImage">Previous</router-link>
+                <div v-if="!previousImage"></div>
+                <router-link :to="parent.showRouteFor(nextImage)" v-if="nextImage">Next</router-link>
             </div>
             <div class="album-image-nav-previews">
                 <ul class="image-preview-list">
-                    <li :id="`photo_id${image.id}`" :class="{'current-image': image.id === parent.modelId}" v-for="(image, i) in model.images" :key="i">
+                    <li :class="{'current-image': image.id === parent.modelId}" v-for="(image, i) in model.images" :key="i">
                         <router-link :to="parent.showRouteFor(image)" class="preview-container">
                             <img :src="thumbnailUrlFor(image.mini_thumbnail_path)">
                         </router-link>
@@ -60,6 +61,7 @@ export default {
         return {
             model: null,
             imageModel: null, //for when the model is the parent of the image
+            modelIndex: -1, //when model is parent, the index of the current image in the image array
         }
     },
     computed: {
@@ -75,6 +77,18 @@ export default {
             }
             return this.model;
         },
+        previousImage: function(){
+            if(!this.parent || this.modelIndex < 0 || this.modelIndex === 0){
+                return null;
+            }
+            return this.model.images[this.modelIndex-1];
+        },
+        nextImage: function(){
+            if(!this.parent || this.modelIndex < 0 || this.model.images.length <= this.modelIndex){
+                return null;
+            }
+            return this.model.images[this.modelIndex+1];
+        },
     },
     watch: {
         '$route'(to, from){
@@ -84,15 +98,18 @@ export default {
     methods: {
         loadModel: function(modelPath){
             this.imageModel = null;
+            this.modelIndex = -1;
             this.getModel(modelPath).then((itemsJson)=>{
                 this.model = itemsJson;
                 
                 //if parent, lookup image in parent images
                 if(this.parent){
                     const imageId = this.parent.modelId;
-                    for(let image of this.model.images){
+                    for(let i=0;i<this.model.images.length;i++){
+                        const image = this.model.images[i];
                         if(image.id === this.parent.modelId){
                             this.imageModel = image;
+                            this.modelIndex = i;
                             break;
                         }
                     }
