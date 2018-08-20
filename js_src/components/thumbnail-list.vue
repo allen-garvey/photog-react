@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'Album-List',
+    name: 'Thumbnail-List',
     props: {
         getModel: {
             type: Function,
