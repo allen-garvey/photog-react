@@ -22,7 +22,7 @@ const router = new VueRouter({
             component: TextList,
             props: {
                 itemShowRouteName: 'foldersShow',
-                thumbnailListKey: null,
+                itemsListKey: null,
             },
         },
         { 
@@ -31,7 +31,7 @@ const router = new VueRouter({
             component: ThumbnailList,
             props: {
                 itemShowRouteName: 'albumShow',
-                thumbnailListKey: null,
+                itemsListKey: null,
             },
         },
         { 
@@ -40,7 +40,7 @@ const router = new VueRouter({
             component: ThumbnailList,
             props: {
                 itemShowRouteName: 'personsShow',
-                thumbnailListKey: null,
+                itemsListKey: null,
             },
         },
         { 
@@ -49,7 +49,7 @@ const router = new VueRouter({
             component: ThumbnailList,
             props: {
                 itemShowRouteName: 'albumShow',
-                thumbnailListKey: 'images',
+                itemsListKey: 'images',
             },
         },
         { 
@@ -58,7 +58,7 @@ const router = new VueRouter({
             component: ThumbnailList,
             props: {
                 itemShowRouteName: 'personsShow',
-                thumbnailListKey: 'images',
+                itemsListKey: 'images',
             },
         },
         { 
@@ -67,7 +67,7 @@ const router = new VueRouter({
             component: ThumbnailList,
             props: {
                 itemShowRouteName: 'albumShow',
-                thumbnailListKey: 'albums',
+                itemsListKey: 'albums',
             },
         },
     ],

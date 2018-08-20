@@ -25,7 +25,7 @@ export default {
             type: String,
             required: true,
         },
-        thumbnailListKey: {
+        itemsListKey: {
             type: String,
         },
     },
@@ -49,8 +49,8 @@ export default {
             if(this.isLoadingModel){
                 return [];
             }
-            if(this.thumbnailListKey){
-                return this.model[this.thumbnailListKey];
+            if(this.itemsListKey){
+                return this.model[this.itemsListKey];
             }
             return this.model;
         },
