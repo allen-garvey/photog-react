@@ -29,45 +29,90 @@ const router = new VueRouter({
             path: '/albums',
             name: 'albumsIndex', 
             component: ThumbnailList,
-            props: {
-                itemShowRouteName: 'albumsShow',
-                itemsListKey: null,
+            props: (route) => {
+                return {
+                    showRouteFor: (item)=>{
+                        return {
+                            name: 'albumsShow',
+                            params: {
+                                id: item.id,
+                            },
+                        };
+                    },
+                }; 
             },
         },
         { 
             path: '/persons',
             name: 'personsIndex', 
             component: ThumbnailList,
-            props: {
-                itemShowRouteName: 'personsShow',
-                itemsListKey: null,
+            props: (route) => {
+                return {
+                    showRouteFor: (item)=>{
+                        return {
+                            name: 'personsShow',
+                            params: {
+                                id: item.id,
+                            },
+                        };
+                    },
+                }; 
             },
         },
         { 
             path: '/albums/:id',
             name: 'albumsShow', 
             component: ThumbnailList,
-            props: {
-                itemShowRouteName: 'imagesShow',
-                itemsListKey: 'images',
+            props: (route) => {
+                return {
+                    itemsListKey: 'images',
+                    showRouteFor: (item)=>{
+                        return {
+                            name: 'albumImagesShow',
+                            params: {
+                                album_id: route.params.id,
+                                image_id: item.id,
+                            },
+                        };
+                    },
+                }; 
             },
         },
         { 
             path: '/persons/:id',
             name: 'personsShow', 
             component: ThumbnailList,
-            props: {
-                itemShowRouteName: 'imagesShow',
-                itemsListKey: 'images',
+            props: (route) => {
+                return {
+                    itemsListKey: 'images',
+                    showRouteFor: (item)=>{
+                        return {
+                            name: 'personImagesShow',
+                            params: {
+                                person_id: route.params.id,
+                                image_id: item.id,
+                            },
+                        };
+                    },
+                }; 
             },
         },
         { 
             path: '/folders/:id',
             name: 'foldersShow', 
             component: ThumbnailList,
-            props: {
-                itemShowRouteName: 'albumsShow',
-                itemsListKey: 'albums',
+            props: (route) => {
+                return {
+                    itemsListKey: 'albums',
+                    showRouteFor: (item)=>{
+                        return {
+                            name: 'albumsShow',
+                            params: {
+                                id: item.id,
+                            },
+                        };
+                    },
+                }; 
             },
         },
         { 
@@ -82,7 +127,7 @@ const router = new VueRouter({
         },
         { 
             path: '/albums/:album_id/images/:image_id',
-            name: 'albumImageShow', 
+            name: 'albumImagesShow', 
             component: ImageDetail,
             props: (route) => {
                 return {
@@ -92,7 +137,7 @@ const router = new VueRouter({
                         modelId: parseInt(route.params.image_id),
                         showRouteFor: (item)=>{
                             return {
-                                name: 'albumImageShow',
+                                name: 'albumImagesShow',
                                 params: {
                                     album_id: route.params.album_id,
                                     image_id: item.id,
@@ -105,7 +150,7 @@ const router = new VueRouter({
         },
         { 
             path: '/persons/:person_id/images/:image_id',
-            name: 'personImageShow', 
+            name: 'personImagesShow', 
             component: ImageDetail,
             props: (route) => {
                 return {
@@ -115,7 +160,7 @@ const router = new VueRouter({
                         modelId: parseInt(route.params.image_id),
                         showRouteFor: (item)=>{
                             return {
-                                name: 'personImageShow',
+                                name: 'personImagesShow',
                                 params: {
                                     person_id: route.params.person_id,
                                     image_id: item.id,

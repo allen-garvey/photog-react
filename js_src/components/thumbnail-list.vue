@@ -21,8 +21,8 @@ export default {
             type: Function,
             required: true,
         },
-        itemShowRouteName: {
-            type: String,
+        showRouteFor: {
+            type: Function,
             required: true,
         },
         itemsListKey: {
@@ -85,14 +85,6 @@ export default {
         },
         thumbnailUrlFor: function(item){
             return `/media/thumbnails/${encodeURI(this.imageFor(item).mini_thumbnail_path)}`;
-        },
-        showRouteFor: function(item){
-            return {
-                name: this.itemShowRouteName,
-                params: {
-                    id: item.id,
-                },
-            };
         },
         titleFor: function(item){
             if('name' in item){
