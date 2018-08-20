@@ -14,7 +14,6 @@ const router = new VueRouter({
         { 
             path: '/', 
             name: 'home',
-            component: ThumbnailList, 
             redirect: '/albums' 
         },
         { 
