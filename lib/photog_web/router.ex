@@ -13,12 +13,6 @@ defmodule PhotogWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", PhotogWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
-  end
-
   # Other scopes may use custom stacks.
   scope "/api", PhotogWeb do
     pipe_through :api
@@ -29,5 +23,14 @@ defmodule PhotogWeb.Router do
     resources "/persons", PersonController, only: [:index, :show]
     resources "/person_images", PersonImageController, only: [:index, :show]
     resources "/album_images", AlbumImageController, only: [:index, :show]
+  end
+
+  scope "/", PhotogWeb do
+    pipe_through :browser # Use the default browser stack
+
+    # catch all requests and send index page for single page application
+    # note this has to be the last route, since routes declared after this one won't be triggered
+    # https://elixirforum.com/t/how-to-change-routes-for-single-page-application/3954
+    get "/*path", PageController, :index
   end
 end
