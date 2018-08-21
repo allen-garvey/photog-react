@@ -42,8 +42,8 @@ defmodule Photog.Api do
     #better than using separate preload, since only uses 1 query
     #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
 
-    albums_query = from album in Album, 
-                      join: cover_image in assoc(album, :cover_image), 
+    albums_query = from album in Album,
+                      join: cover_image in assoc(album, :cover_image),
                       order_by: album.folder_order,
                       preload: [cover_image: cover_image]
 
@@ -52,8 +52,8 @@ defmodule Photog.Api do
            where: folder.id == ^id,
            preload: [albums: ^albums_query],
            limit: 1
-    
-  end 
+
+  end
 
   @doc """
   Creates a folder.
@@ -149,9 +149,10 @@ defmodule Photog.Api do
       ** (Ecto.NoResultsError)
 
   """
-  def get_image!(id) do 
+  def get_image!(id) do
+    image_albums_query = (from album in Album, order_by: album.name)
     Repo.get!(Image, id)
-      |> Repo.preload(:albums)
+      |> Repo.preload(albums: image_albums_query)
   end
 
   @doc """
@@ -232,7 +233,7 @@ defmodule Photog.Api do
     #better than using separate preload, since only uses 1 query
     #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
     Repo.all from album in Album,
-          join: cover_image in assoc(album, :cover_image), 
+          join: cover_image in assoc(album, :cover_image),
           preload: [cover_image: cover_image],
           order_by: :id
   end
@@ -252,13 +253,15 @@ defmodule Photog.Api do
 
   """
   def get_album!(id) do
-    images_query = from image in Image, 
+    # for some reason, if you put subquery directly in preload, it causes an error
+    image_albums_query = (from album in Album, order_by: album.name)
+    images_query = from image in Image,
                       join: album_image in AlbumImage, on: image.id == album_image.image_id,
                       where: album_image.album_id == ^id,
-                      preload: [:albums],
+                      preload: [albums: ^image_albums_query],
                       order_by: album_image.image_order
 
-    Repo.one!(from album in Album, 
+    Repo.one!(from album in Album,
                       join: image in assoc(album, :images),
                       where: album.id == ^id,
                       preload: [cover_image: image, images: ^images_query],
@@ -345,7 +348,7 @@ defmodule Photog.Api do
     #better than using separate preload, since only uses 1 query
     #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
     Repo.all from person in Person,
-          join: cover_image in assoc(person, :cover_image), 
+          join: cover_image in assoc(person, :cover_image),
           preload: [cover_image: cover_image],
           order_by: :name
   end
@@ -367,10 +370,12 @@ defmodule Photog.Api do
   def get_person!(id) do
     #better than using separate preload, since only uses 1 query
     #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
-    images_query = from image in Image, 
+    # for some reason, if you put subquery directly in preload, it causes an error
+    image_albums_query = (from album in Album, order_by: album.name)
+    images_query = from image in Image,
                       join: person_image in PersonImage, on: image.id == person_image.image_id,
                       where: person_image.person_id == ^id,
-                      preload: [:albums],
+                      preload: [albums: ^image_albums_query],
                       order_by: [desc: image.creation_time]
 
     Repo.one! from person in Person,
