@@ -14,6 +14,23 @@ defmodule PhotogWeb.ImageView do
     image_full_to_map(image)
   end
 
+  def render("exif.json", %{image: image, exif: exif}) do
+    %{data: %{
+      image: %{
+        id: image.id,
+        master_path: image.master_path,
+      },
+      exif: %{
+        make: exif["exif:Make"],
+        iso: exif["exif:ISOSpeedRatings"],
+        datetime: exif["exif:DateTime"],
+        model: exif["exif:Model"],
+        orientation: exif["exif:Orientation"],
+        exposure_time: exif["exif:ExposureTime"],
+      },
+    }}
+  end
+
   def image_to_map(image) do
     %{
       id: image.id,

@@ -23,6 +23,8 @@ defmodule PhotogWeb.Router do
     resources "/persons", PersonController, only: [:index, :show]
     resources "/person_images", PersonImageController, only: [:index, :show]
     resources "/album_images", AlbumImageController, only: [:index, :show]
+
+    get "/images/:id/exif", ImageController, :exif_for
   end
 
   scope "/", PhotogWeb do
