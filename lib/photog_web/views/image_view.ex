@@ -21,12 +21,29 @@ defmodule PhotogWeb.ImageView do
         master_path: image.master_path,
       },
       exif: %{
-        make: exif["exif:Make"],
-        iso: exif["exif:ISOSpeedRatings"],
-        datetime: exif["exif:DateTime"],
-        model: exif["exif:Model"],
-        orientation: exif["exif:Orientation"],
-        exposure_time: exif["exif:ExposureTime"],
+        camera: %{
+          maker: exif["Make"],
+          model: exif["Camera Model Name"],
+          model_release_year: exif["Model Release Year"],
+          lens_info: exif["Lens Info"],
+          lens_model: exif["Lens Model"],
+        },
+        file: %{
+          type: exif["File Type"],
+          dimensions: exif["Image Size"],
+          megapixels: exif["Megapixels"],
+          creation_time: exif["Create Date"],
+        },
+        photo: %{
+          aperature: exif["Aperture"],
+          shutter: exif["Shutter Speed"],
+          iso: exif["ISO"],
+          orientation: exif["Camera Orientation"],
+          camera_mode: exif["Exposure Program"],
+          flash: exif["Flash"],
+          focal_length: exif["Focal Length"],
+          hdr: exif["HDR"],
+        },
       },
     }}
   end
