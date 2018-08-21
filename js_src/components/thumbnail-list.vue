@@ -1,7 +1,7 @@
 <template>
     <main class="main container">
         <h2 v-if="model.name">{{model.name}}</h2>
-        <ul class="thumbnail-list"  v-infinite-scroll="loadMoreThumbnails" infinite-scroll-distance="20" infinite-scroll-disabled="isInfiniteScrollDisabled">
+        <ul class="thumbnail-list"  v-infinite-scroll="loadMoreThumbnails" infinite-scroll-distance="40" infinite-scroll-disabled="isInfiniteScrollDisabled">
             <li v-for="(item, i) in thumbnailList" :key="i">
                 <router-link :to="showRouteFor(item)" class="thumbnail-image-container">
                     <img :alt="altTextFor(item)" :src="thumbnailUrlFor(item)" />
