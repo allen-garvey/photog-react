@@ -134,6 +134,16 @@ export default {
         generateImageUrl: function(rawUrl){
             return `/media/images/${encodeURI(rawUrl)}`;
         },
+        keyLeftAction(){
+            if(this.previousImage){
+                this.$router.push(this.parent.showRouteFor(this.previousImage));
+            }
+        },
+        keyRightAction(){
+            if(this.nextImage){
+                this.$router.push(this.parent.showRouteFor(this.nextImage));
+            }
+        },
     }
 }
 </script>

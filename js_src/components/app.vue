@@ -1,7 +1,7 @@
 <template>
     <div>
         <Photog-Header></Photog-Header>
-        <router-view :get-model="get"></router-view>
+        <router-view :get-model="get" ref="routerView"></router-view>
         <Photog-Footer></Photog-Footer>
     </div>
 </template>
@@ -29,6 +29,23 @@ export default {
 
     },
     created() {
+        window.addEventListener('keyup', (e)=>{
+            const routerView = this.$refs.routerView;
+            switch(e.keyCode){
+                //arrow left
+                case 37:
+                    if(routerView.keyLeftAction){
+                        routerView.keyLeftAction();
+                    }
+                    break;
+                //arrow right
+                case 39:
+                    if(routerView.keyRightAction){
+                        routerView.keyRightAction();
+                    }
+                    break;
+            }
+        });
     },
     methods: {
         get: function(modelPath){
