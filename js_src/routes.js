@@ -54,6 +54,23 @@ export default {
             },
         },
         { 
+            path: '/images',
+            name: 'imagesIndex', 
+            component: ThumbnailList,
+            props: (route) => {
+                return {
+                    showRouteFor: (item)=>{
+                        return {
+                            name: 'imagesShow',
+                            params: {
+                                id: item.id,
+                            },
+                        };
+                    },
+                }; 
+            },
+        },
+        { 
             path: '/albums/:id',
             name: 'albumsShow', 
             component: ThumbnailList,
