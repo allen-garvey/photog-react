@@ -40,20 +40,10 @@ export default {
     data() {
         return {
             model: [],
-            //need this property or there will be errors when we switch routes and new models haven't been loaded yet
-            isLoadingModel: true,
+            thumbnailList: [],
         }
     },
     computed: {
-        thumbnailList: function(){
-            if(this.isLoadingModel){
-                return [];
-            }
-            if(this.itemsListKey){
-                return this.model[this.itemsListKey];
-            }
-            return this.model;
-        },
     },
     watch: {
         '$route'(to, from){
@@ -64,10 +54,15 @@ export default {
     },
     methods: {
         loadModel: function(modelPath){
-            this.isLoadingModel = true;
+            this.thumbnailList = [];
             this.getModel(modelPath).then((itemsJson)=>{
                 this.model = itemsJson;
-                this.isLoadingModel = false;
+                if(this.itemsListKey){
+                    this.thumbnailList = this.model[this.itemsListKey];
+                }
+                else{
+                    this.thumbnailList = this.model;
+                }
             });
         },
         imageFor: function(item){
