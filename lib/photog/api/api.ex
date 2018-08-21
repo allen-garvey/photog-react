@@ -149,7 +149,10 @@ defmodule Photog.Api do
       ** (Ecto.NoResultsError)
 
   """
-  def get_image!(id), do: Repo.get!(Image, id)
+  def get_image!(id) do 
+    Repo.get!(Image, id)
+      |> Repo.preload(:albums)
+  end
 
   @doc """
   Creates a image.
@@ -252,6 +255,7 @@ defmodule Photog.Api do
     images_query = from image in Image, 
                       join: album_image in AlbumImage, on: image.id == album_image.image_id,
                       where: album_image.album_id == ^id,
+                      preload: [:albums],
                       order_by: album_image.image_order
 
     Repo.one!(from album in Album, 
@@ -366,6 +370,7 @@ defmodule Photog.Api do
     images_query = from image in Image, 
                       join: person_image in PersonImage, on: image.id == person_image.image_id,
                       where: person_image.person_id == ^id,
+                      preload: [:albums],
                       order_by: [desc: image.creation_time]
 
     Repo.one! from person in Person,

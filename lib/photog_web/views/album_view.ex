@@ -18,7 +18,7 @@ defmodule PhotogWeb.AlbumView do
     %{id: album.id,
       name: album.name,
       cover_image: PhotogWeb.ImageView.image_to_map(album.cover_image),
-      images: Enum.map(album.images, &PhotogWeb.ImageView.image_to_map/1),
+      images: Enum.map(album.images, &PhotogWeb.ImageView.image_full_to_map/1),
     }
   end
 
@@ -27,6 +27,13 @@ defmodule PhotogWeb.AlbumView do
       id: album.id,
       name: album.name,
       cover_image: PhotogWeb.ImageView.image_to_map(album.cover_image),
+    }
+  end
+
+  def album_excerpt_mini_to_map(album) do
+    %{
+      id: album.id,
+      name: album.name,
     }
   end
 end
