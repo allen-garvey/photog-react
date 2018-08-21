@@ -1,7 +1,7 @@
 <template>
     <main class="main container">
         <h2 v-if="model.name">{{model.name}}</h2>
-        <ul class="thumbnail-list">
+        <ul class="thumbnail-list"  v-infinite-scroll="loadMoreThumbnails" infinite-scroll-distance="20" infinite-scroll-disabled="isInfiniteScrollDisabled">
             <li v-for="(item, i) in thumbnailList" :key="i">
                 <router-link :to="showRouteFor(item)" class="thumbnail-image-container">
                     <img :alt="altTextFor(item)" :src="thumbnailUrlFor(item)" />
@@ -14,6 +14,11 @@
 </template>
 
 <script>
+import infiniteScroll from 'vue-infinite-scroll';
+
+//amount of thumbnails to add each time vue infinite scroll is called
+const THUMBNAIL_CHUNK_LENGTH = 60;
+
 export default {
     name: 'Thumbnail-List',
     props: {
@@ -28,6 +33,9 @@ export default {
         itemsListKey: {
             type: String,
         },
+    },
+    directives: {
+        infiniteScroll,
     },
     components: {
     },
@@ -44,6 +52,20 @@ export default {
         }
     },
     computed: {
+        thumnailListSource(){
+            //this might happen when vue changed but model not yet loaded
+            if(this.itemsListKey && !this.model[this.itemsListKey]){
+                return [];
+            }
+            if(this.itemsListKey){
+                return this.model[this.itemsListKey];
+            }
+            return this.model;
+
+        },
+        isInfiniteScrollDisabled(){
+            return this.thumbnailList.length === this.thumnailListSource.length;
+        },
     },
     watch: {
         '$route'(to, from){
@@ -57,13 +79,11 @@ export default {
             this.thumbnailList = [];
             this.getModel(modelPath).then((itemsJson)=>{
                 this.model = itemsJson;
-                if(this.itemsListKey){
-                    this.thumbnailList = this.model[this.itemsListKey];
-                }
-                else{
-                    this.thumbnailList = this.model;
-                }
+                this.thumbnailList = this.thumnailListSource.slice(0, THUMBNAIL_CHUNK_LENGTH);
             });
+        },
+        loadMoreThumbnails(){
+            this.thumbnailList = this.thumnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
         },
         imageFor: function(item){
             if('cover_image' in item){
