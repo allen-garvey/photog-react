@@ -34,6 +34,14 @@
                 <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
             </dl>
         </div>
+        <div class="image-show-albums" v-if="image.albums && image.albums.length > 0">
+            <h3 class="subsection-title">Albums</h3>
+            <ul class="image-show-album-list">
+                <li class="image-container" v-for="(album, i) in image.albums" :key="i">
+                    <router-link :to="{name: 'albumsShow', params: {id: album.id}}">{{album.name}}</router-link>
+                </li>
+            </ul>
+        </div>
     </main>
 </template>
 
