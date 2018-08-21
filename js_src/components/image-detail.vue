@@ -8,7 +8,7 @@
                 <router-link :to="parent.showRouteFor(nextImage)" v-if="nextImage">Next</router-link>
             </div>
             <div class="album-image-nav-previews">
-                <ul class="image-preview-list">
+                <ul class="image-preview-list" v-scroll-to-selected-item="'.current-image'">
                     <li :class="{'current-image': image.id === parent.modelId}" v-for="(image, i) in model.images" :key="i">
                         <router-link :to="parent.showRouteFor(image)" class="preview-container">
                             <img :src="thumbnailUrlFor(image.mini_thumbnail_path)">
@@ -51,6 +51,17 @@ export default {
         },
         parent: {
             type: Object,
+        },
+    },
+    directives: {
+        scrollToSelectedItem: {
+            inserted(el, binding){
+                const selectedItemSelector = binding.value;
+                const currentItem = el.querySelector(selectedItemSelector);
+                if(currentItem){
+                    currentItem.scrollIntoView({behavior: 'instant'});
+                }
+            },
         },
     },
     created(){
