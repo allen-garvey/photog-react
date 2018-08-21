@@ -31,8 +31,6 @@ export default {
     },
     created(){
         //initial setup of items, since $route watch method won't be called on initial load
-        console.log('album list created');
-        console.log(this.$route);
         this.loadModel(this.$route.path);
     },
     data() {
@@ -55,8 +53,6 @@ export default {
     },
     watch: {
         '$route'(to, from){
-            console.log('route changed');
-            console.log(to);
             this.loadModel(to.path);
         }
     },
