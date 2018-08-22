@@ -29,7 +29,6 @@ defmodule PhotogWeb.ImageView do
           lens_model: exif["LensModel"],
         },
         file: %{
-          type: exif["FileType"],
           megapixels: exif["Megapixels"],
           creation_time: exif["CreateDate"],
           file_type: exif["FileType"],
