@@ -26,7 +26,7 @@
             <a :href="masterUrl">View full-size</a>
         </div>
         <div class="image-show-info-section">
-            <h3 class="Info"></h3>
+            <h3 class="image-info-section-heading">Info</h3>
             <dl>
                 <dt>Date Taken</dt>
                 <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>

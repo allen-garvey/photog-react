@@ -18,9 +18,13 @@
 
 $image_show_dt_width: 10em;
 .image-show-info-section{
+	.image-info-section-heading{
+		margin-bottom: 0.5rem;
+	}
 	dl{
 		display: flex;
 		flex-wrap: wrap;
+		margin-top: 0;
 	}
 	dt{
 		font-weight: bold;
