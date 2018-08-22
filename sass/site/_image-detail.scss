@@ -21,13 +21,16 @@ $image_show_dt_width: 10em;
 	.image-info-section-heading{
 		margin-bottom: 0.5rem;
 	}
+	.image-exif-heading{
+		margin: 0 0 0.5rem;
+	}
 	dl{
 		display: flex;
 		flex-wrap: wrap;
 		margin-top: 0;
 	}
 	dt{
-		font-weight: bold;
+		font-weight: normal;
 		flex-basis: $image_show_dt_width;
 		margin-bottom: 0.5em;
 		&:after{

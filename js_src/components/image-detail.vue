@@ -34,6 +34,18 @@
                 <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
             </dl>
         </div>
+        <div class="image-show-info-section" v-if="imageExif">
+            <h3 class="image-info-section-heading">Exif</h3>
+                <template v-for="sectionKey in Object.keys(imageExif).sort()">
+                    <h4 :key="sectionKey+'_heading'" class="image-exif-heading">{{formatExifPropertyName(sectionKey)}}</h4>
+                    <dl :key="sectionKey+'_list'">
+                        <template v-for="sectionPropertyKey in Object.keys(imageExif[sectionKey]).sort()">
+                            <dt :key="`${sectionKey}_${sectionPropertyKey}_dt`" v-if="imageExif[sectionKey][sectionPropertyKey]">{{formatExifPropertyName(sectionPropertyKey)}}</dt>
+                            <dd :key="`${sectionKey}_${sectionPropertyKey}_dd`" v-if="imageExif[sectionKey][sectionPropertyKey]">{{imageExif[sectionKey][sectionPropertyKey]}}</dd>
+                        </template>
+                    </dl>
+                </template>
+        </div>
         <div class="image-show-albums" v-if="image.albums && image.albums.length > 0">
             <h3 class="subsection-title">Albums</h3>
             <ul class="image-show-album-list">
@@ -46,10 +58,20 @@
 </template>
 
 <script>
+//from: https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+function capitalizeFirstLetter(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
 export default {
     name: 'Image-Detail',
     props: {
         getModel: {
+            type: Function,
+            required: true,
+        },
+        getExif: {
             type: Function,
             required: true,
         },
@@ -85,6 +107,7 @@ export default {
             model: null,
             imageModel: null, //for when the model is the parent of the image
             modelIndex: -1, //when model is parent, the index of the current image in the image array
+            imageExif: null,
         }
     },
     computed: {
@@ -122,6 +145,9 @@ export default {
         loadModel: function(modelPath){
             this.imageModel = null;
             this.modelIndex = -1;
+
+            this.imageExif = null;
+
             this.getModel(modelPath).then((itemsJson)=>{
                 this.model = itemsJson;
                 
@@ -137,7 +163,10 @@ export default {
                         }
                     }
                 }
+            });
 
+            this.getExif(this.imageId).then((imageExif)=>{
+                this.imageExif = imageExif.exif;
             });
         },
         thumbnailUrlFor: function(thumbnailPath){
@@ -156,6 +185,9 @@ export default {
                 this.$router.push(this.parent.showRouteFor(this.nextImage));
             }
         },
+        formatExifPropertyName(s){
+            return capitalizeFirstLetter(s).replace(/_/g, ' ');
+        }
     }
 }
 </script>

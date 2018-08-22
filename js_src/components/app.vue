@@ -1,7 +1,7 @@
 <template>
     <div>
         <Photog-Header></Photog-Header>
-        <router-view :get-model="get" ref="routerView"></router-view>
+        <router-view :get-model="get" ref="routerView" :get-exif="getExif"></router-view>
         <Photog-Footer></Photog-Footer>
     </div>
 </template>
@@ -23,6 +23,7 @@ export default {
     data() {
         return {
             cache: new Map(),
+            exifCache: new Map(),
         }
     },
     computed: {
@@ -48,7 +49,7 @@ export default {
         });
     },
     methods: {
-        get: function(modelPath){
+        get(modelPath){
             if(this.cache.has(modelPath)){
                 return new Promise((resolve)=>{
                     resolve(this.cache.get(modelPath));
@@ -59,6 +60,20 @@ export default {
             }).then((json)=>{
                 const data = json.data;
                 this.cache.set(modelPath, data);
+                return data;
+            });
+        },
+        getExif(imageId){
+            if(this.exifCache.has(imageId)){
+                return new Promise((resolve)=>{
+                    resolve(this.exifCache.get(imageId));
+                });
+            }
+            return fetch(`${API_URL_BASE}/images/${imageId}/exif`).then((res)=>{
+                return res.json();
+            }).then((json)=>{
+                const data = json.data;
+                this.exifCache.set(imageId, data);
                 return data;
             });
         },
