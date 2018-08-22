@@ -132,7 +132,8 @@ export default {
             component: ImageDetail,
             props: (route) => {
                 return {
-                    modelApiPath: `/images/${route.params.id}`
+                    modelApiPath: `/images/${route.params.id}`,
+                    imageId: parseInt(route.params.image_id),
                 }; 
             },
         },
@@ -143,9 +144,9 @@ export default {
             props: (route) => {
                 return {
                     modelApiPath: `/albums/${route.params.album_id}`,
+                    imageId: parseInt(route.params.image_id),
                     parent: {
                         parentRouteName: 'albumsShow',
-                        modelId: parseInt(route.params.image_id),
                         showRouteFor: (item)=>{
                             return {
                                 name: 'albumImagesShow',
@@ -166,9 +167,9 @@ export default {
             props: (route) => {
                 return {
                     modelApiPath: `/persons/${route.params.person_id}`,
+                    imageId: parseInt(route.params.image_id),
                     parent: {
                         parentRouteName: 'personsShow',
-                        modelId: parseInt(route.params.image_id),
                         showRouteFor: (item)=>{
                             return {
                                 name: 'personImagesShow',

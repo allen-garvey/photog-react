@@ -9,7 +9,7 @@
             </div>
             <div class="album-image-nav-previews">
                 <ul class="image-preview-list" v-scroll-to-selected-item="'.current-image'">
-                    <li :class="{'current-image': image.id === parent.modelId}" v-for="(image, i) in model.images" :key="i">
+                    <li :class="{'current-image': image.id === imageId}" v-for="(image, i) in model.images" :key="i">
                         <router-link :to="parent.showRouteFor(image)" class="preview-container">
                             <img :src="thumbnailUrlFor(image.mini_thumbnail_path)">
                         </router-link>
@@ -55,6 +55,10 @@ export default {
         },
         modelApiPath: {
             type: String,
+            required: true,
+        },
+        imageId: {
+            type: Number,
             required: true,
         },
         parent: {
@@ -123,10 +127,10 @@ export default {
                 
                 //if parent, lookup image in parent images
                 if(this.parent){
-                    const imageId = this.parent.modelId;
+                    const imageId = this.imageId;
                     for(let i=0;i<this.model.images.length;i++){
                         const image = this.model.images[i];
-                        if(image.id === this.parent.modelId){
+                        if(image.id === imageId){
                             this.imageModel = image;
                             this.modelIndex = i;
                             break;
