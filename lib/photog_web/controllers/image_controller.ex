@@ -35,11 +35,9 @@ defmodule PhotogWeb.ImageController do
   def exif_for(conn, %{"id" => id}) do
     image = Api.get_image!(id)
     image_master_full_path = Path.absname("priv/static/media/images") |> Path.join(image.master_path)
-      with {exif_results, 0} <- System.cmd("exiftool", ["-duplicates", "-unknown", "-tab", image_master_full_path]) do
+    with {exif_results, 0} <- System.cmd("exiftool", ["-duplicates", "-unknown", "-json", image_master_full_path]) do
       # IO.puts(exif_results)
-      exif_map = String.split(exif_results, "\n")
-        |> Enum.map(&(String.split(&1, "\t")))
-        |> Enum.into(%{}, fn subarray -> {Enum.at(subarray, 0), Enum.at(subarray, 1)} end)
+      exif_map = Poison.decode!(exif_results) |> Enum.at(0)
       render(conn, "exif.json", exif: exif_map, image: image)
     end
   end
