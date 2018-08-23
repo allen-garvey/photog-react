@@ -144,8 +144,8 @@ defmodule Photog.Api do
       [%Image{}, ...]
 
   """
-  def list_image_favorites do
-    Repo.all(from image in Image, where: image.is_favorite == true, order_by: [desc: :creation_time, desc: :id]) |> Repo.preload(:albums)
+  def list_image_favorites(is_favorite) do
+    Repo.all(from image in Image, where: image.is_favorite == ^is_favorite, order_by: [desc: :creation_time, desc: :id]) |> Repo.preload(:albums)
   end
 
   @doc """
