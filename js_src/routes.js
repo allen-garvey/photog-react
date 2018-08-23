@@ -25,6 +25,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 return {
+                    apiPath: route.path,
                     showRouteFor: (item)=>{
                         return {
                             name: 'albumsShow',
@@ -42,6 +43,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 return {
+                    apiPath: route.path,
                     showRouteFor: (item)=>{
                         return {
                             name: 'personsShow',
@@ -59,6 +61,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 return {
+                    apiPath: route.path,
                     showRouteFor: (item)=>{
                         return {
                             name: 'imagesShow',
@@ -76,6 +79,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 return {
+                    apiPath: route.path,
                     itemsListKey: 'images',
                     showRouteFor: (item)=>{
                         return {
@@ -95,6 +99,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 return {
+                    apiPath: route.path,
                     itemsListKey: 'images',
                     showRouteFor: (item)=>{
                         return {
@@ -114,6 +119,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 return {
+                    apiPath: route.path,
                     itemsListKey: 'albums',
                     showRouteFor: (item)=>{
                         return {

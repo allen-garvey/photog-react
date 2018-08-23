@@ -26,6 +26,10 @@ export default {
             type: Function,
             required: true,
         },
+        apiPath: {
+            type: String,
+            required: true,
+        },
         showRouteFor: {
             type: Function,
             required: true,
@@ -41,7 +45,7 @@ export default {
     },
     created(){
         //initial setup of items, since $route watch method won't be called on initial load
-        this.loadModel(this.$route.path);
+        this.loadModel(this.apiPath);
     },
     data() {
         return {
@@ -67,7 +71,7 @@ export default {
     },
     watch: {
         '$route'(to, from){
-            this.loadModel(to.path);
+            this.loadModel(this.apiPath);
         }
     },
     methods: {
