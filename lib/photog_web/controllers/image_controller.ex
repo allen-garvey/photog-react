@@ -6,6 +6,11 @@ defmodule PhotogWeb.ImageController do
 
   action_fallback PhotogWeb.FallbackController
 
+  def index(conn, %{"favorites" => "true"}) do
+    images = Api.list_image_favorites()
+    render(conn, "index.json", images: images)
+  end
+
   def index(conn, _params) do
     images = Api.list_images()
     render(conn, "index.json", images: images)

@@ -136,6 +136,19 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the list of images that are marked as favorite.
+
+  ## Examples
+
+      iex> list_image_favorites()
+      [%Image{}, ...]
+
+  """
+  def list_image_favorites do
+    Repo.all(from image in Image, where: image.is_favorite == true, order_by: [desc: :creation_time, desc: :id]) |> Repo.preload(:albums)
+  end
+
+  @doc """
   Gets a single image.
 
   Raises `Ecto.NoResultsError` if the Image does not exist.
