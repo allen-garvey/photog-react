@@ -132,7 +132,7 @@ defmodule Photog.Api do
 
   """
   def list_images do
-    Repo.all(Image)
+    Repo.all(Image) |> Repo.preload(:albums)
   end
 
   @doc """
