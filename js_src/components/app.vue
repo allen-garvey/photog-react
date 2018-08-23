@@ -9,6 +9,7 @@
 <script>
 import PhotogHeader from './header.vue'
 import PhotogFooter from './footer.vue'
+import CacheUtil from '../cache-util.js'
 
 const API_URL_BASE = '/api';
 
@@ -50,32 +51,12 @@ export default {
     },
     methods: {
         get(modelPath){
-            if(this.cache.has(modelPath)){
-                return new Promise((resolve)=>{
-                    resolve(this.cache.get(modelPath));
-                });
-            }
-            return fetch(API_URL_BASE + modelPath).then((res)=>{
-                return res.json();
-            }).then((json)=>{
-                const data = json.data;
-                this.cache.set(modelPath, data);
-                return data;
-            });
+            const apiUrl = API_URL_BASE + modelPath;
+            return CacheUtil.fetchIntoCache(apiUrl, this.cache, apiUrl);
         },
         getExif(imageId){
-            if(this.exifCache.has(imageId)){
-                return new Promise((resolve)=>{
-                    resolve(this.exifCache.get(imageId));
-                });
-            }
-            return fetch(`${API_URL_BASE}/images/${imageId}/exif`).then((res)=>{
-                return res.json();
-            }).then((json)=>{
-                const data = json.data;
-                this.exifCache.set(imageId, data);
-                return data;
-            });
+            const apiUrl = `${API_URL_BASE}/images/${imageId}/exif`;
+            return CacheUtil.fetchIntoCache(apiUrl, this.exifCache, imageId);
         },
     }
 }
