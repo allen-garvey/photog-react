@@ -6,6 +6,7 @@
                 <li><router-link :to="{name: 'albumsIndex'}">Albums</router-link></li>
                 <li><router-link :to="{name: 'foldersIndex'}">Folders</router-link></li>
                 <li><router-link :to="{name: 'personsIndex'}">Persons</router-link></li>
+                <li><router-link :to="{name: 'imageFavoritesIndex'}">Favorites</router-link></li>
             </ul>
         </nav>
     </header>

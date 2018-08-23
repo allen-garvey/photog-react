@@ -74,6 +74,24 @@ export default {
             },
         },
         { 
+            path: '/images/favorites',
+            name: 'imageFavoritesIndex', 
+            component: ThumbnailList,
+            props: (route) => {
+                return {
+                    apiPath: '/images/?favorites=true',
+                    showRouteFor: (item)=>{
+                        return {
+                            name: 'imagesShow',
+                            params: {
+                                id: item.id,
+                            },
+                        };
+                    },
+                }; 
+            },
+        },
+        { 
             path: '/albums/:id',
             name: 'albumsShow', 
             component: ThumbnailList,
