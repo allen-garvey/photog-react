@@ -32,6 +32,8 @@ priv/static/media/*
 **/.sass-cache/*
 .sass-cache
 .sass-cache/*
+react/node_modules/*
+react/npm-debug*
 node_modules/*
 npm-debug.log
 npm-debug*
