@@ -10,8 +10,9 @@ Turn your Apple Photos library into a web application
 
 ## Getting Started
 
-* Install dependencies with `mix deps.get && npm install`
+* Install dependencies with `mix deps.get`
 * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+* Install and build react dependencies with `cd react && npm install && npm run build`
 * Run the command `mkdir -p priv/static/media/images && mkdir -p priv/static/media/thumbnails` to create the folders for images
 * Create a system link from your Apple Photos library `Masters` folder to the `images` folder you just created, and a system link from your Apple Photos library `Thumbnails` folder to the `thumbnails` folder you just created 
 * Start Phoenix endpoint with `mix phx.server`
